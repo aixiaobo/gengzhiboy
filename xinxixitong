@@ -1,0 +1,95 @@
+# 创建永久列表存储信息
+stu = []
+
+# 用户使用引导
+
+
+def start_1():
+    print("欢迎使用，请根据提示输入对应命令操作")
+    list_1 = ["命令 '1' .添加学生", "命令 '2' 添加学生成绩", "命令 '3' 查询学生考试成绩", "命令 '4' 退出 "]
+    print(list_1)
+    ml = int(input("请输入您要执行的操作的对应命令"))
+    if ml == 1:
+        p_name()
+        start_1()
+    elif ml == 2:
+        add_stu_sco()
+        start_1()
+    elif ml == 3:
+        select_1()
+        start_1()
+    elif ml == 4:
+        exit_1()
+
+
+# 添加学生信息
+def p_name(class_1='2年级3班'):
+        dict_1 = {}
+        pass_n = input("请输入学生姓名")
+        if (pass_n not in dict_1) and (len(pass_n) > 0):
+            print("恭喜你添加成功")
+            pass_w = int(input("请输入密码,至少是六位自然数"))
+            if type(pass_w) == int and len(str(pass_w)) >= 6:
+                print("恭喜你密码设置成功")
+                # 创建单条信息的字典(临时的，每次执行完一次都把信息传进永久列表stu中。
+                # 而自身都会刷新环境，不会影响下次字典的创建，不会产生覆盖)
+                dict_1["name"] = pass_n
+                dict_1["password"] = pass_w
+                dict_1["scroll"] = "未填写"
+                dict_1["class_name"] = class_1
+
+                # 把每条的字典信息添加到主系统表单中
+                stu.append(dict_1)
+                print(stu)
+            else:
+                print("请重新输入")
+        # 当输入的信息不能通过验证时
+        else:
+            print(pass_n, "已存在/不能为空")
+            print("请重新输入")
+        start_1()
+
+
+# 添加学生分数
+def add_stu_sco():
+        in_name = input("请输入您要添加分数的学生姓名")
+        print("注意：若分数不能添加，则可能是输入的名字不存在")
+        for i in stu:
+            print(i)
+            if i["name"] == in_name:
+                stu_c = input("请输入学生分数,0~100")
+                i["scroll"] = stu_c
+                print("分数输入为"+stu_c)
+                print(stu)
+            else:
+                pass
+                # print("对不起您要添加分数的学生姓名不存在，请重新输入,请输入正确的格式")
+
+        start_1()
+
+# 查询
+def select_1():
+    sle_1 = input("请输入您要查询的学生姓名,若无信息，原因可能是您要查找的名字不存在")
+    for i in stu:
+        # 输出当前学生的分数信息
+        if i["name"] == sle_1:
+            print(i)
+            # 按照分数来进行学生信息排序
+            print("====未排序信息=====")
+            print(stu)
+            print("====排序后信息=====")
+            print(sorted(stu, key=lambda x: x["scroll"], reverse=True))
+            # （x相当与列表中的每一个字典(元素)）对列表中各个元素进行操纵，取出他们都有的键age，
+            # 然后已取出的键的值进行比较，生成排序，或升序(默认)，获降序(至于里面的过程，这个内置函数已经封装，会调用即可)
+        else:
+            pass
+
+    start_1()
+
+# 退出
+def exit_1():
+    import sys
+    sys.exit(0)
+
+
+start_1()
